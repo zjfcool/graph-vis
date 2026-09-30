@@ -144,6 +144,7 @@ function initOptions(options: GraphVisOptions) {
         stroke: {
           width: 1,
         },
+        width: 1,
       },
       arrowConfig: {
         style: {

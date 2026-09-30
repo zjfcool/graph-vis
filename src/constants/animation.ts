@@ -1,0 +1,41 @@
+import { Easing } from "@tweenjs/tween.js";
+const EASING = {
+  "back-in": Easing.Back.In,
+  "back-out": Easing.Back.Out,
+  "back-in-out": Easing.Back.InOut,
+  "bounce-in": Easing.Bounce.In,
+  "bounce-out": Easing.Bounce.Out,
+  "bounce-in-out": Easing.Bounce.InOut,
+  "circular-in": Easing.Circular.In,
+  "circular-out": Easing.Circular.Out,
+  "circular-in-out": Easing.Circular.InOut,
+  "cubic-in": Easing.Cubic.In,
+  "cubic-out": Easing.Cubic.Out,
+  "cubic-in-out": Easing.Cubic.InOut,
+  "elastic-in": Easing.Elastic.In,
+  "elastic-out": Easing.Elastic.Out,
+  "elastic-in-out": Easing.Elastic.InOut,
+  "exponential-in": Easing.Exponential.In,
+  "exponential-out": Easing.Exponential.Out,
+  "exponential-in-out": Easing.Exponential.InOut,
+  linear: Easing.Linear.None,
+  "linear-in": Easing.Linear.In,
+  "linear-out": Easing.Linear.Out,
+  "linear-in-out": Easing.Linear.InOut,
+  "quadratic-in": Easing.Quadratic.In,
+  "quadratic-out": Easing.Quadratic.Out,
+  "quadratic-in-out": Easing.Quadratic.InOut,
+  "quartic-in": Easing.Quartic.In,
+  "quartic-out": Easing.Quartic.Out,
+  "quartic-in-out": Easing.Quartic.InOut,
+  "quintic-in": Easing.Quintic.In,
+  "quintic-out": Easing.Quintic.Out,
+  "quintic-in-out": Easing.Quintic.InOut,
+  "sinusoidal-in": Easing.Sinusoidal.In,
+  "sinusoidal-out": Easing.Sinusoidal.Out,
+  "sinusoidal-in-out": Easing.Sinusoidal.InOut,
+} as const;
+
+type EasingType = keyof typeof EASING;
+
+export { EASING, type EasingType };

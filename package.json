@@ -1,6 +1,6 @@
 {
-  "name": "graph-vis",
-  "version": "0.1.0",
+  "name": "@zjfcool/graph-vis",
+  "version": "0.2.0-beta.1",
   "description": "A high-performance graph visualization library built on PixiJS.",
   "keywords": [
     "graph",
@@ -39,7 +39,8 @@
     "lint:fmt": "oxfmt",
     "lint": "oxlint",
     "prepare": "lefthook install",
-    "lint:cspell": "cspell ."
+    "lint:cspell": "cspell .",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^25.0.0",
@@ -51,7 +52,6 @@
     "d3-zoom": "^3.0.0",
     "events": "^3.3.0",
     "graphology": "^0.26.0",
-    "pixi.js": "8.19.0",
     "tiny-typed-emitter": "^2.1.0"
   },
   "devDependencies": {
@@ -67,7 +67,11 @@
     "lefthook": "^2.1.6",
     "oxfmt": "^0.46.0",
     "oxlint": "^1.61.0",
+    "pixi.js": "^8.19.0",
     "tsdown": "^0.22.0",
     "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "pixi.js": ">=8"
   }
 }

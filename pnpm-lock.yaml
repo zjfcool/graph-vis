@@ -35,9 +35,6 @@ importers:
       graphology:
         specifier: ^0.26.0
         version: 0.26.0(graphology-types@0.24.8)
-      pixi.js:
-        specifier: 8.19.0
-        version: 8.19.0
       tiny-typed-emitter:
         specifier: ^2.1.0
         version: 2.1.0
@@ -78,6 +75,9 @@ importers:
       oxlint:
         specifier: ^1.61.0
         version: 1.73.0
+      pixi.js:
+        specifier: ^8.19.0
+        version: 8.19.0
       tsdown:
         specifier: ^0.22.0
         version: 0.22.4(typescript@6.0.3)
@@ -723,6 +723,7 @@ packages:
   '@xmldom/xmldom@0.8.13':
     resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@yuku-codegen/binding-darwin-arm64@0.5.46':
     resolution: {integrity: sha512-Kb3ULHGCN3lCfFj8L6YzSeIg1rcpXRuzbDc47KYBdK9R/8YW9HWKWfHji+WF/91QiCDb7u0VMhHgB/dPjpT2qg==}

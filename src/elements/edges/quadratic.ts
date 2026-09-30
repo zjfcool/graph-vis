@@ -20,18 +20,21 @@ export class QuadraticEdge extends BaseEdge {
     if (this.isSelfLoop) {
       const nodeMaxBound = (Math.max(...(this.source?.bounds || [])) ?? 0) / 2;
       const spacing = (40 + nodeMaxBound) / 0.75;
-      this.options = deepAssign(
-        {
-          style: {
-            cubicAlongT: [0, 0],
-            cubicRotation: [-Math.PI / 2, 0],
-            cubicSpacing: [spacing, spacing],
-          },
-        },
+      Object.assign(
         this.options,
+        deepAssign(
+          {
+            style: {
+              cubicAlongT: [0, 0],
+              cubicRotation: [-Math.PI / 2, 0],
+              cubicSpacing: [spacing, spacing],
+            },
+          },
+          this.options,
+        ),
       );
     } else {
-      this.options = deepAssign(DefaultOptions, this.options);
+      Object.assign(this.options, deepAssign(DefaultOptions, this.options));
     }
     let {
       cubicAlongT,

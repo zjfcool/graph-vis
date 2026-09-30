@@ -30,6 +30,7 @@ import type {
   GraphVisEvents,
   GraphVisOptions,
   LayoutOptions,
+  LinkOptions,
 } from "./types";
 import { BaseEdge, Link } from "./elements/edges";
 import { Tween, Group } from "@tweenjs/tween.js";
@@ -67,6 +68,7 @@ function initOptions(options: GraphVisOptions) {
     width: 500,
     height: 500,
     // default pixi graph options
+    resizeDebounceTime: 500,
     container: "body",
     data: { nodes: [], edges: [] },
     node: {
@@ -100,7 +102,7 @@ function initOptions(options: GraphVisOptions) {
       labelConfig: {
         labelText: (d) => d.label,
         style: {
-          visible: true,
+          visible: false,
           placement: "right",
           offsetX: 0,
           offsetY: 0,
@@ -157,7 +159,7 @@ function initOptions(options: GraphVisOptions) {
       labelConfig: {
         labelText: (d) => d.label,
         style: {
-          visible: true,
+          visible: false,
           alongT: 0.5,
           alongTPositionMode: "local",
           offsetPositionMode: "local",
@@ -174,6 +176,11 @@ function initOptions(options: GraphVisOptions) {
     link: {
       style: {
         visible: true,
+      },
+      labelConfig: {
+        style: {
+          visible: false,
+        },
       },
     },
     zoom: {
@@ -445,6 +452,12 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     }
     return this;
   }
+  getApp() {
+    return this.app;
+  }
+  getGraphology() {
+    return this.graphology as Graphology<NodeAttributes, EdgeAttributes, GraphAttributes>;
+  }
   destroy() {
     this.clear();
     this.app.stage.removeChildren();
@@ -515,8 +528,9 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
   getLayout() {
     return this.layoutContext;
   }
-  layout(options: LayoutOptions) {
-    this.options.layout = options;
+  setLayoutOptions(options: Partial<LayoutOptions>) {
+    if (this.options.layout === undefined) this.options.layout = { type: "random" };
+    deepAssign(this.options.layout, options);
     this.stopLayout();
     this.restartLayout();
   }
@@ -601,6 +615,49 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     });
     return this;
   }
+  getNodeAttribute(id: string, name: string | number) {
+    return this.graphology.getNodeAttribute(id, name);
+  }
+  getNodeAttributes(id: string) {
+    return this.graphology.getNodeAttributes(id) as NodeAttributes;
+  }
+  updateNodeAttribute(id: string, attr: string, cb: (v: any) => any) {
+    this.graphology.updateNodeAttribute(id, attr, cb);
+    return this;
+  }
+  updateNodeAttributes(id: string, cb: (attr: NodeAttributes) => NodeAttributes) {
+    this.graphology.updateNodeAttributes(id, cb);
+    return this;
+  }
+  removeNodeAttribute(id: string, attr: string | number) {
+    this.graphology.removeNodeAttribute(id, attr);
+    return this;
+  }
+  hasNodeAttribute(id: string, name: string | number) {
+    return this.graphology.hasNodeAttribute(id, name);
+  }
+  getEdgeAttribute(id: string, name: string | number) {
+    return this.graphology.getEdgeAttribute(id, name);
+  }
+  getEdgeAttributes(id: string) {
+    return this.graphology.getEdgeAttributes(id) as EdgeAttributes;
+  }
+  hasEdgeAttribute(id: string, name: string | number) {
+    return this.graphology.hasEdgeAttribute(id, name);
+  }
+  updateEdgeAttribute(id: string, name: string | number, cb: (v: any) => any) {
+    this.graphology.updateEdgeAttribute(id, name, cb);
+    return this;
+  }
+  updateEdgeAttributes(id: string, cb: (attr: EdgeAttributes) => EdgeAttributes) {
+    this.graphology.updateEdgeAttributes(id, cb);
+    return this;
+  }
+  removeEdgeAttribute(id: string, name: string | number) {
+    this.graphology.removeEdgeAttribute(id, name);
+    return this;
+  }
+
   neighbors(id: string) {
     return this.graphology.neighbors(id).map((key) => {
       return this.nodeMap.get(key) as BaseNode;
@@ -723,8 +780,8 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
       return true;
     return false;
   }
-  setNodeOptions(nodeOptions: NodeOptions) {
-    this.options.node = deepAssign(this.options.node, nodeOptions);
+  setNodeOptions(nodeOptions: Omit<NodeOptions, "type" | "drawBy">) {
+    deepAssign(this.options.node, nodeOptions);
     this.forEachNode((node) => {
       // TODO: 修改为更细粒度的更新
       node.drawNode();
@@ -735,20 +792,33 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
         edge.update();
       });
     }
+    return this;
   }
-  setEdgeOptions(edgeOptions: EdgeOptions) {
+  setEdgeOptions(edgeOptions: Omit<EdgeOptions, "type" | "drawBy">) {
     this.options.edge = deepAssign(this.options.edge, edgeOptions);
-    this.options.link = deepAssign(
-      deepClone({
-        style: this.options.edge.style,
-        arrowConfig: this.options.edge.arrowConfig,
-      }),
-      this.options.link,
+    Object.assign(
+      this.options.link!,
+      deepAssign(
+        deepClone({
+          style: this.options.edge.style,
+          arrowConfig: this.options.edge.arrowConfig,
+        }),
+        this.options.link,
+      ),
     );
     this.forEachEdge((edge) => {
       // TODO: 修改为更细粒度的更新
       edge.update();
     });
+    return this;
+  }
+  setLinkOptions(linkOptions: LinkOptions) {
+    deepAssign(this.options.link, linkOptions);
+    this.link?.draw();
+    return this;
+  }
+  getLink() {
+    return this.link;
   }
   private createEdge(id: string) {
     const options = this.options.edge!;
@@ -1163,6 +1233,8 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
         y,
       } as BaseNode;
     }
+    this.link.data.target = this.link.target.data ?? this.link.target;
+    this.link.data.targetType = this.link.targetType;
     this.link.draw();
     this.emit("link:move", { event, link: this.link });
   }
@@ -1184,6 +1256,8 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     this.link.isLinking = true;
     this.link.isDirected = isDirected;
     this.link.source = node;
+    this.link.data.source = node.data;
+    this.link.data.isLinking = true;
     this.edgesContainer.addChild(this.link);
     this.app.stage.cursor = "crosshair";
     this.app.stage.on("pointermove", this.linkeNodeMoveHandle, this);
@@ -1200,6 +1274,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
         this.addEdge({ source, target, isDirected: this.link.isDirected });
       }
       this.link.isLinking = false;
+      this.link.data.isLinking = false;
       this.app.stage.off("pointermove", this.linkeNodeMoveHandle, this);
       this.app.stage.off("pointerdown", this.endLinkNode, this);
       this.link.visible = false;

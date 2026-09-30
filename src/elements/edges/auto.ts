@@ -21,7 +21,7 @@ const DefaultOptions: EdgeOptions = {
 export class AutoEdge extends BaseEdge {
   bezier?: Bezier;
   constructor(id: string, options: EdgeOptions, data: EdgeAttributes) {
-    super(id, deepAssign(DefaultOptions, options), data);
+    super(id, Object.assign(options, deepAssign(DefaultOptions, options)), data);
   }
   createBezier() {
     const { source, target, isCurved, stepCount, isSelfLoop, edgeIndex, direction } = this;

@@ -47,7 +47,7 @@ export type NodeLabelStyleOptions<D = any> = {
   haloStroke?: GStrokeStyle<D>;
   haloSpacing?: AttrType<number, D>;
   haloRadius?: AttrType<number, D>;
-  // halo dray by sprite
+  // halo draw by sprite
   haloTint?: AttrType<ColorSource, D>;
   haloAlpha?: AttrType<number, D>;
 } & GTextStyleOptions<D>;

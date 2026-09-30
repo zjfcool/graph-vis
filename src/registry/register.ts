@@ -1,4 +1,3 @@
-import { Theme } from "../types";
 import { REGISTRY_EXTENSION } from "./store";
 import { RegistryExtension, Category } from "./type";
 
@@ -13,7 +12,4 @@ function register<T extends Category>(
   }
   Object.assign(REGISTRY_EXTENSION[category], { [type]: obj });
 }
-function registerTheme(type: string, obj: Theme) {
-  register("theme", type, obj);
-}
-export { register, registerTheme };
+export { register };

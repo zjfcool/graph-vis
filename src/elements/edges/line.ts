@@ -17,7 +17,7 @@ const DefaultOptions: EdgeOptions = {
 export class LineEdge extends BaseEdge {
   bezier?: Bezier;
   constructor(id: string, options: EdgeOptions, data: EdgeAttributes) {
-    super(id, deepAssign(DefaultOptions, options), data);
+    super(id, Object.assign(options, deepAssign(DefaultOptions, options)), data);
   }
   createBezier() {
     const { source, target, isSelfLoop } = this;

@@ -31,7 +31,7 @@ export class ImageNode extends BaseNode {
       return;
     }
     this.useContext(drawBy);
-    const [w, h] = Array.isArray(size) ? size : [size, size];
+    const [w, h = w] = Array.isArray(size) ? size : [size, size];
     if (drawBy === "graphics" || drawBy === undefined) {
       const haloContext = this.haloContext as Graphics;
       if (halo === true) {

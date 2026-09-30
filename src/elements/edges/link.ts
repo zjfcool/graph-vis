@@ -1,4 +1,4 @@
-import { Bezier } from "bezier-js";
+import { Bezier, Offset } from "bezier-js";
 import { CommonPoint, EdgeOptions } from "../../types";
 import { BaseEdge } from "./base-edge";
 import {
@@ -10,6 +10,7 @@ import {
 
 const ID = "__LINK__";
 const DATA = {
+  id: ID,
   edgeCount: 1,
 };
 const DefaultOptionsMap: Record<string, EdgeOptions> = {
@@ -43,11 +44,9 @@ export class Link extends BaseEdge {
   cacheEdges: BaseEdge[] = []; // 存取
   targetType: "node" | "point" = "point";
   bezier?: Bezier;
-  cacheOptions: EdgeOptions;
   constructor(options: EdgeOptions) {
     super(ID, options, DATA);
     this.isLinking = false;
-    this.cacheOptions = { ...this.options };
   }
   get edgeIndex() {
     return this.edgeCount - 1;
@@ -64,25 +63,28 @@ export class Link extends BaseEdge {
       isQuadratic,
       isCubic,
       isAuto,
+      isLine,
     } = this;
     if (source === undefined || target === undefined) return;
     const DefaultOptions = DefaultOptionsMap[this.type] ?? {};
 
     if (this.isSelfLoop) {
-      const nodeMaxBound = (Math.max(...(this.source?.bounds || [])) ?? 0) / 2;
-      const spacing = (40 + nodeMaxBound) / 0.75;
-      this.options = deepAssign(
-        {
-          style: {
-            cubicAlongT: [0, 0],
-            cubicRotation: [-Math.PI / 2, 0],
-            cubicSpacing: [spacing, spacing],
+      const spacing = 40;
+      Object.assign(
+        this.options,
+        deepAssign(
+          {
+            style: {
+              cubicAlongT: [0, 0],
+              cubicRotation: [-Math.PI / 2, 0],
+              cubicSpacing: [spacing, spacing],
+            },
           },
-        },
-        this.cacheOptions,
+          this.options,
+        ),
       );
     } else {
-      this.options = deepAssign(DefaultOptions, this.cacheOptions);
+      Object.assign(this.options, deepAssign(DefaultOptions, this.options));
     }
     let {
       quadraticAlongT,
@@ -99,7 +101,7 @@ export class Link extends BaseEdge {
     const sourceSegments = source.segments ? [...source.segments] : [];
     const targetSegments = target.segments ? [...target.segments] : [];
 
-    if ((isCurved || isQuadratic) && !isSelfLoop) {
+    if ((isCurved || isQuadratic) && !isSelfLoop && !isLine && !isCubic) {
       let cp: CommonPoint;
       if (isQuadratic) {
         cp = getQuadraticControlPoint(
@@ -142,7 +144,7 @@ export class Link extends BaseEdge {
       if (startT === 1) startT = 0;
       if (endT === 0) endT = 1;
       bezier = bezier.split(startT, endT);
-    } else if (isSelfLoop || isCubic) {
+    } else if ((isSelfLoop || isCubic) && !isLine) {
       const [spacing1, spacing2 = spacing1] = Array.isArray(cubicSpacing)
         ? cubicSpacing
         : [cubicSpacing];
@@ -156,9 +158,13 @@ export class Link extends BaseEdge {
         offsetVal1 = (spacing1 * (edgeIndex + 1) + nodeMaxBound) / 0.75;
         offsetVal2 = (spacing2 * (edgeIndex + 1) + nodeMaxBound) / 0.75;
       }
-      if (isCubic || (!isAuto && isSelfLoop)) {
+      if (isCubic) {
         offsetVal1 = spacing1;
         offsetVal2 = spacing2;
+      }
+      if (!isAuto && isSelfLoop) {
+        offsetVal1 = (spacing1 + nodeMaxBound) / 0.75;
+        offsetVal2 = (spacing2 + nodeMaxBound) / 0.75;
       }
       const { cp1, cp2 } = getCubicControlPoints(
         source,
@@ -228,14 +234,28 @@ export class Link extends BaseEdge {
       tail: tail,
     };
   }
+  setEdgeLabelPointAttr(t: number, offsetX: number, offsetY: number) {
+    const { bezier } = this;
+    if (bezier) {
+      const p = bezier.offset(t, offsetY) as Offset;
+      const derivative = bezier.derivative(t);
+      const derivativeAngle = Math.atan2(derivative.y, derivative.x);
+      const x = p.x + offsetX * Math.cos(derivativeAngle);
+      const y = p.y + offsetX * Math.sin(derivativeAngle);
+      this.edgeLabelPointAttr = {
+        x,
+        y,
+        rotation: derivativeAngle,
+      };
+    }
+  }
   drawEdge(): void {
-    console.time("create bezier");
     this.bezier = this.createBezier();
-    console.timeEnd("create bezier");
     this.drawEdgeByGraphics();
   }
   draw(): void {
     this.drawEdge();
+    this.drawEdgeLabel();
     if (this.isDirected) this.drawEdgeArrow();
   }
 }

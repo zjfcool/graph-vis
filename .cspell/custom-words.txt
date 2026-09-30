@@ -1,6 +1,10 @@
 bumpp
+mouseup
+mouseupoutside
 oxfmt
 oxlint
+pointerup
+pointerupoutside
 rightupoutside
 tweenjs
 webgl

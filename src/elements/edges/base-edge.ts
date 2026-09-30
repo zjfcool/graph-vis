@@ -75,19 +75,20 @@ export abstract class BaseEdge extends Container {
   }
   set state(v) {
     this.currentState = v;
-    const stateStyle = this.options.state?.[v];
-    if (stateStyle) {
-      this.drawEdge();
-      if (stateStyle.labelStyle) {
-        this.drawEdgeLabel();
-      }
-      if (stateStyle.arrowStyle) {
-        this.drawEdgeArrow();
-      }
-    }
-    if (v === "default") {
-      this.draw();
-    }
+    this.draw();
+    // const stateStyle = this.options.state?.[v];
+    // if (stateStyle) {
+    //   this.drawEdge();
+    //   if (stateStyle.labelStyle) {
+    //     this.drawEdgeLabel();
+    //   }
+    //   if (stateStyle.arrowStyle) {
+    //     this.drawEdgeArrow();
+    //   }
+    // }
+    // if (v === "default") {
+    //   this.draw();
+    // }
   }
   get edgeCount() {
     return this.data.edgeCount ?? (1 as number);
@@ -147,6 +148,9 @@ export abstract class BaseEdge extends Container {
   }
   get isAuto() {
     return this.type === "auto";
+  }
+  get isLine() {
+    return this.type === "line";
   }
   getBezierConfig(): BezierConfig {
     const { source } = this;
@@ -728,10 +732,9 @@ export abstract class BaseEdge extends Container {
     edgeLabel.visible = visible;
     if (visible === false) return;
     if (!isText(labelText)) {
-      console.error(
+      throw new Error(
         "Please config edge.labelConfig.labelText (return string | number | { toString: ()=>string })",
       );
-      return;
     }
     let haloContext = edgeLabel.getChildByLabel("halo") as Graphics | Sprite;
     if (!haloContext) {

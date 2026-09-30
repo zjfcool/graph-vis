@@ -118,7 +118,7 @@ abstract class BaseNode extends Container {
     const { node, type } = this;
     if (drawBy === "graphics" || drawBy === undefined) {
       let haloContext = node.getChildByLabel(`${NodeElementLabel.Halo}`) as Graphics;
-      if (!haloContext) {
+      if (!(haloContext instanceof Graphics)) {
         haloContext = new Graphics();
         haloContext.label = `${NodeElementLabel.Halo}`;
         node.addChild(haloContext);
@@ -130,21 +130,28 @@ abstract class BaseNode extends Container {
       let nodeContext;
       if (type === "text") {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as Text;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof Text)) {
           nodeContext = new Text();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
         }
       } else if (type === "bitmap-text") {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as BitmapText;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof BitmapText)) {
           nodeContext = new BitmapText();
+          nodeContext.label = `${NodeElementLabel.Node}`;
+          node.addChild(nodeContext);
+        }
+      } else if (type === "image") {
+        nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as Sprite;
+        if (!(nodeContext instanceof Sprite)) {
+          nodeContext = new Sprite();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
         }
       } else {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as Graphics;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof Graphics)) {
           nodeContext = new Graphics();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
@@ -155,7 +162,7 @@ abstract class BaseNode extends Container {
     }
     if (drawBy === "sprite") {
       let haloContext = node.getChildByLabel(`${NodeElementLabel.Halo}`) as Sprite;
-      if (!haloContext) {
+      if (!(haloContext instanceof Sprite)) {
         haloContext = new Sprite();
         haloContext.label = `${NodeElementLabel.Halo}`;
         node.addChild(haloContext);
@@ -166,21 +173,21 @@ abstract class BaseNode extends Container {
       let nodeContext;
       if (type === "text") {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as Text;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof Text)) {
           nodeContext = new Text();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
         }
       } else if (type === "bitmap-text") {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as BitmapText;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof BitmapText)) {
           nodeContext = new BitmapText();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
         }
       } else {
         nodeContext = node.getChildByLabel(`${NodeElementLabel.Node}`) as Sprite;
-        if (!nodeContext) {
+        if (!(nodeContext instanceof Sprite)) {
           nodeContext = new Sprite();
           nodeContext.label = `${NodeElementLabel.Node}`;
           node.addChild(nodeContext);
@@ -536,10 +543,9 @@ abstract class BaseNode extends Container {
     nodeLabel.visible = visible!;
     if (visible === false) return;
     if (!isText(labelText)) {
-      console.error(
+      throw new Error(
         "Please config node.labelConfig.labelText (return string | number | { toString: ()=>string })",
       );
-      return;
     }
     let haloContext = nodeLabel.getChildByLabel("halo") as Graphics | Sprite;
     if (!haloContext) {

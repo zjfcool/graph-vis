@@ -1,6 +1,6 @@
 {
   "name": "@zjfcool/graph-vis",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "description": "A high-performance graph visualization library built on PixiJS.",
   "keywords": [
     "graph",

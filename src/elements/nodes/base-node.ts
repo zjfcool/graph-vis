@@ -40,8 +40,8 @@ abstract class BaseNode extends Container {
     this.options = options;
     this.id = id;
     this.data = data;
-    this.x = data.x ?? 0;
-    this.y = data.y ?? 0;
+    this.x = toValue(options.style?.x, data) ?? data.x ?? 0;
+    this.y = toValue(options.style?.y, data) ?? data.y ?? 0;
     this.eventMode = "static";
     // node init
     let node = new Container();

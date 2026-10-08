@@ -16,6 +16,8 @@ export type GTextStyleOptions<D = any> = DataDriven<TextStyleOptions, D>;
  */
 export type NodeStyleOptions<D = any> = {
   visible?: AttrType<boolean, D>;
+  x?: AttrType<number, D>;
+  y?: AttrType<number, D>;
   size?: AttrType<number | [number, number] | number[], D>;
   pointNum?: AttrType<number, D>;
   rotation?: AttrType<number, D>;

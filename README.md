@@ -173,7 +173,7 @@ GraphVisOptions继承[ApplicationOptions](https://pixijs.download/release/docs/a
 ##### 节点标签样式配置项(NodeLabelStyleOptions)
 | 属性 | 类型 | 默认值 | 描述 |drawBy|
 |:---|:---|:---:|:---|:---:|
-|visible|`AttrType<boolean>`|true|节点标签的现实与隐藏|-|
+|visible|`AttrType<boolean>`|false|节点标签的现实与隐藏|-|
 |placement|`Placement`|right|节点标签整体位置的设置|-|
 |offsetY|`AttrType<number>`|0|节点标签的Y轴偏移量|-|
 |offsetX|`AttrType<number`|0|节点标签的X轴偏移量|-|
@@ -261,7 +261,7 @@ new GraphVis({
 ##### 边样式配置项(EdgeStyleOptions)
 | 属性 | 类型 | 默认值 | 描述 |drawBy|
 |:---|:---|:---:|:---|:---:|
-|visible|`AttrType<boolean>`|true|边的显示与隐藏|-|
+|visible|`AttrType<boolean>`|false|边的显示与隐藏|-|
 |smoothness|`AttrType<number>`|0.75|曲线边的柔和度值越大越顺滑|-|
 |quadraticAlongT|`AttrType<number>`|0.5|确定二次贝塞尔曲线控制点位置的向量在边的中的位置,0为边的起始位置,1为边的末尾,0.5为边的中间位置,使用该值可以沿边来回移动二次贝塞尔曲线控制点的位置|-|
 |quadraticRotation|`AttrType<number>`|0|确定二次贝塞尔曲线控制点位置的向量的方向,正值为顺时针旋转向量,负值为逆时针旋转向量|-|
@@ -610,6 +610,7 @@ new GraphVis({
 |setEdgeOptions|`EdgeOptions`|-|动态更改边的配置项|
 |setThemeOptions|`string`|-|入参为主题别名,切换主题|
 |setLinkOptions|`LinkOptions`|-|更改link配置|
+|setZoomOptions|`ZoomOptions`|-|更改zoom配置项|
 |getLink|-|link实例|获取link实例|
 |getApp|-|Application 实例| 获取Application实例|
 |getGraphology|-|Graph实例|获取Graph实例,用于操作数据|
@@ -630,7 +631,7 @@ new GraphVis({
 |getNodeAttribute|`id:string,name:string\|number`| any| 获取某个节点原始数据某个属性的值|
 |getNodeAttributes|`id:string`|any|获取某个节点的原始数据|
 |updateNodeAttribute|`id:string,attr:string,cb:(v:any)=>any`|GraphVis实例|更新某个节点的原始数据的某个属性值|
-|updateNodeAttributes｜`id:string,cb:(attr:NodeAttributes)=>NodeAttributes`|GraphVis实例|更新某个节点的原始数据|
+|updateNodeAttributes|`id:string,cb:(attr:NodeAttributes)=>NodeAttributes`|GraphVis实例|更新某个节点的原始数据|
 |removeNodeAttribute|`id:string,attr:string\|number`|GraphVis实例|移除某个节点的原始数据的某个属性|
 |hasNodeAttribute|`id:string,name:string\|number`|boolean|查看某个节点是否含有某个属性|
 |getEdgeAttribute|`id:string,name:string\|number`|any|获取某个边的原始数据的某个属性|
@@ -663,38 +664,46 @@ type EasingType = "linear" | "back-in" | "back-out" | "back-in-out" | "bounce-in
 |afterupdate|() => void|执行图元素更新方法update后触发|
 ##### 节点事件
 触发对象为节点实例
+```typescript
+type NodeEventCallbackParams = {
+    target:BaseNode;
+    originalTarget:Container;
+    originalType:string;
+    event:FederatedPointerEvent
+}
+```
 | 事件 | 回调函数 | 描述|
 |:---|:---|:---|
-|node:click|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
-|node:mousedown|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
-|node:mousemove|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
-|node:mouseout|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
-|node:mouseover|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
-|node:mouseup|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
-|node:mouseupoutside|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
-|node:pointercancel|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
-|node:pointerdown|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
-|node:pointermove|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
-|node:pointerout|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
-|node:pointerover|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
-|node:pointertap|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
-|node:pointerup|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
-|node:pointerupoutside|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
-|node:rightclick|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
-|node:rightdown|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
-|node:rightup|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
-|node:rightupoutside|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
-|node:tap|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
-|node:touchcancel|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
-|node:touchend|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
-|node:touchendoutside|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
-|node:touchmove|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
-|node:touchstart|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
+|node:click|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
+|node:mousedown|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
+|node:mousemove|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
+|node:mouseout|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
+|node:mouseover|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
+|node:mouseup|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
+|node:mouseupoutside|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
+|node:pointercancel|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
+|node:pointerdown|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
+|node:pointermove|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
+|node:pointerout|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
+|node:pointerover|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
+|node:pointertap|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
+|node:pointerup|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
+|node:pointerupoutside|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
+|node:rightclick|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
+|node:rightdown|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
+|node:rightup|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
+|node:rightupoutside|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
+|node:tap|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
+|node:touchcancel|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
+|node:touchend|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
+|node:touchendoutside|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
+|node:touchmove|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
+|node:touchstart|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
 |node:wheel|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedWheelEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onwheel)|
-|node:mouseenter|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
-|node:mouseleave|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
-|node:pointerenter|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
-|node:pointerleave|`({target:BaseNode;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
+|node:mouseenter|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
+|node:mouseleave|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
+|node:pointerenter|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
+|node:pointerleave|`(NodeEventCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
 |node:drag|`(event:any)=>void`|节点拖拽过程中触发|
 |node:dragstart|`(event:any)=>void`|节点开始拖拽时触发一次|
 |node:dragend|`(event:any)=>void`|节点拖拽结束后触发一次|
@@ -704,76 +713,90 @@ type EasingType = "linear" | "back-in" | "back-out" | "back-in-out" | "bounce-in
 |node:afterdrop|`(BaseNode)=>void`|节点删除后触发|
 ##### 边事件
 触发对象为边实例
+```typescript
+type EdgeCallbackParams = {
+    target:BaseEdge;
+    originalTarget:Container;
+    originalType:string;
+    event:FederatedPointerEvent
+}
+```
 | 事件 | 回调函数 | 描述|
 |:---|:---|:---|
-|edge:click|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
-|edge:mousedown|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
-|edge:mousemove|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
-|edge:mouseout|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
-|edge:mouseover|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
-|edge:mouseup|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
-|edge:mouseupoutside|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
-|edge:pointercancel|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
-|edge:pointerdown|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
-|edge:pointermove|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
-|edge:pointerout|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
-|edge:pointerover|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
-|edge:pointertap|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
-|edge:pointerup|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
-|edge:pointerupoutside|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
-|edge:rightclick|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
-|edge:rightdown|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
-|edge:rightup|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
-|edge:rightupoutside|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
-|edge:tap|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
-|edge:touchcancel|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
-|edge:touchend|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
-|edge:touchendoutside|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
-|edge:touchmove|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
-|edge:touchstart|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
+|edge:click|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
+|edge:mousedown|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
+|edge:mousemove|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
+|edge:mouseout|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
+|edge:mouseover|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
+|edge:mouseup|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
+|edge:mouseupoutside|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
+|edge:pointercancel|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
+|edge:pointerdown|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
+|edge:pointermove|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
+|edge:pointerout|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
+|edge:pointerover|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
+|edge:pointertap|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
+|edge:pointerup|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
+|edge:pointerupoutside|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
+|edge:rightclick|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
+|edge:rightdown|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
+|edge:rightup|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
+|edge:rightupoutside|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
+|edge:tap|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
+|edge:touchcancel|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
+|edge:touchend|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
+|edge:touchendoutside|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
+|edge:touchmove|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
+|edge:touchstart|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
 |edge:wheel|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedWheelEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onwheel)|
-|edge:mouseenter|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
-|edge:mouseleave|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
-|edge:pointerenter|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
-|edge:pointerleave|`({target:BaseEdge;originalTarget:Container;originalType:string;event:FederatedPointerEvent})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
+|edge:mouseenter|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
+|edge:mouseleave|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
+|edge:pointerenter|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
+|edge:pointerleave|`(EdgeCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
 |edge:beforeadd|`(EdgeAttributes)=>void`|添加边操作之前触发|
 |edge:afteradd|`(BaseEdge)=>void`|添加边之后触发|
 |edge:beforedrop|`(id:string)=>void`|删除边之前触发|
 |edge:afterdrop|`(BaseEdge)=>void`|删除边之后触发|
 ##### stage事件
 触发对象为app.stage
+```typescript
+type StageCallbackParams = {
+    event:FederatedPointerEvent;
+    target:Container
+}
+```
 | 事件 | 回调函数 | 描述|
 |:---|:---|:---|
-|stage:click|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
-|stage:mousedown|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
-|stage:mousemove|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
-|stage:mouseout|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
-|stage:mouseover|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
-|stage:mouseup|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
-|stage:mouseupoutside|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
-|stage:pointercancel|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
-|stage:pointerdown|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
-|stage:pointermove|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
-|stage:pointerout|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
-|stage:pointerover|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
-|stage:pointertap|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
-|stage:pointerup|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
-|stage:pointerupoutside|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
-|stage:rightclick|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
-|stage:rightdown|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
-|stage:rightup|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
-|stage:rightupoutside|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
-|stage:tap|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
-|stage:touchcancel|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
-|stage:touchend|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
-|stage:touchendoutside|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
-|stage:touchmove|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
-|stage:touchstart|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
+|stage:click|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onclick)|
+|stage:mousedown|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousedown)|
+|stage:mousemove|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmousemove)|
+|stage:mouseout|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseout)|
+|stage:mouseover|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseover)|
+|stage:mouseup|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseup)|
+|stage:mouseupoutside|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseupoutside)|
+|stage:pointercancel|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointercancel)|
+|stage:pointerdown|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerdown)|
+|stage:pointermove|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointermove)|
+|stage:pointerout|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerout)|
+|stage:pointerover|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerover)|
+|stage:pointertap|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointertap)|
+|stage:pointerup|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerup)|
+|stage:pointerupoutside|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerupoutside)|
+|stage:rightclick|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightclick)|
+|stage:rightdown|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightdown)|
+|stage:rightup|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightup)|
+|stage:rightupoutside|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onrightupoutside)|
+|stage:tap|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontap)|
+|stage:touchcancel|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchcancel)|
+|stage:touchend|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchend)|
+|stage:touchendoutside|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchendoutside)|
+|stage:touchmove|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchmove)|
+|stage:touchstart|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#ontouchstart)|
 |stage:wheel|`({event:FederatedWheelEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onwheel)|
-|stage:mouseenter|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
-|stage:mouseleave|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
-|stage:pointerenter|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
-|stage:pointerleave|`({event:FederatedPointerEvent;target:Container})=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
+|stage:mouseenter|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseenter)|
+|stage:mouseleave|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onmouseleave)|
+|stage:pointerenter|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerenter)|
+|stage:pointerleave|`(StageCallbackParams)=>void`|[详情](https://pixijs.download/release/docs/scene.Container.html#onpointerleave)|
 ##### 布局事件
 | 事件 | 回调函数 | 描述|
 |:---|:---|:---|

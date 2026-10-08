@@ -31,6 +31,8 @@ import type {
   GraphVisOptions,
   LayoutOptions,
   LinkOptions,
+  ZoomOptions,
+  DragOptions,
 } from "./types";
 import { BaseEdge, Link } from "./elements/edges";
 import { Tween, Group } from "@tweenjs/tween.js";
@@ -1034,6 +1036,14 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
         );
       }
     }
+  }
+  setZoomOptions(options: ZoomOptions) {
+    deepAssign(this.options.zoom, options);
+    this.initZoom();
+  }
+  setDragOptions(options: DragOptions) {
+    deepAssign(this.options.drag, options);
+    this.initDrag();
   }
   private initDrag() {
     const dragStartHandle = (event: any) => {

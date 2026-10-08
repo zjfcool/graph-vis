@@ -2,7 +2,63 @@
 
 一个图可视化库, 支持上万节点、边的渲染,渲染层基于[PixiJS](https://github.com/pixijs/pixijs)。
 
+<p align="center">
+     <a href="https://zjfcool.github.io/graph-vis/examples/"><img width="80%" src="https://zjfcool.github.io/graph-vis/examples/preview.png"></a>
+</p>
+
 ## 示例
+
+### 基础
+
+- [基础示例](https://zjfcool.github.io/graph-vis/examples/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/main.ts)
+
+### 元素
+
+#### 节点
+
+- [概览](https://zjfcool.github.io/graph-vis/examples/element/node/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/main.ts)
+- [圆形](https://zjfcool.github.io/graph-vis/examples/element/node/circle/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/circle/main.ts)
+- [(圆角)矩形](https://zjfcool.github.io/graph-vis/examples/element/node/rect/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/rect/main.ts)
+- [椭圆形](https://zjfcool.github.io/graph-vis/examples/element/node/ellipse/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/ellipse/main.ts)
+- [图片](https://zjfcool.github.io/graph-vis/examples/element/node/image/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/image/main.ts)
+- [多边形](https://zjfcool.github.io/graph-vis/examples/element/node/polygon/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/polygon/main.ts)
+- [多角星](https://zjfcool.github.io/graph-vis/examples/element/node/star/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/star/main.ts)
+- [文本](https://zjfcool.github.io/graph-vis/examples/element/node/text/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/text/main.ts)
+- [bitmap文本](https://zjfcool.github.io/graph-vis/examples/element/node/bitmap-text/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/bitmap-text/main.ts)
+- [自定义节点](https://zjfcool.github.io/graph-vis/examples/element/node/custom/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/node/custom/main.ts)
+
+#### 边
+
+- [自适应](https://zjfcool.github.io/graph-vis/examples/element/edge/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/edge/main.ts)
+- [自循环边](https://zjfcool.github.io/graph-vis/examples/element/edge/selfloop/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/edge/sefloop/main.ts)
+- [二次贝塞尔曲线](https://zjfcool.github.io/graph-vis/examples/element/edge/quadratic/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/edge/quadratic/main.ts)
+- [三次贝塞尔曲线](https://zjfcool.github.io/graph-vis/examples/element/edge/cubic/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/edge/cubic/main.ts)
+
+#### Link
+
+- [连接线,创建边](https://zjfcool.github.io/graph-vis/examples/element/link/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/element/link/main.ts)
+
+### 主题
+
+- [theme](https://zjfcool.github.io/graph-vis/examples/theme/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/theme/main.ts)
+
+### 布局
+
+- [概览](https://zjfcool.github.io/graph-vis/examples/layout/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/layout/main.ts)
+- [d3-force](https://zjfcool.github.io/graph-vis/examples/layout/d3-force/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/layout/d3-force/main.ts)
+- [random](https://zjfcool.github.io/graph-vis/examples/layout/random/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/layout/random/main.ts)
+
+### 交互
+
+- [边/节点增删改查,状态切换等](https://zjfcool.github.io/graph-vis/examples/interactions/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/interactions/main.ts)
+- [拖拽](https://zjfcool.github.io/graph-vis/examples/interactions/drag/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/interactions/drag/main.ts)
+- [缩放](https://zjfcool.github.io/graph-vis/examples/interactions/zoom/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/interactions/zoom/main.ts)
+
+### 性能
+
+- [5000元素](https://zjfcool.github.io/graph-vis/examples/performance/5000/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/performance/5000/main.ts)
+- [20000元素](https://zjfcool.github.io/graph-vis/examples/performance/20000/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/performance/20000/main.ts)
+- [60000元素](https://zjfcool.github.io/graph-vis/examples/performance/60000/)[(Source)](https://github.com/zjfcool/graph-vis/tree/main/examples/performance/60000/main.ts)
 
 ## 文档
 
@@ -702,6 +758,8 @@ new GraphVis({
 | setThemeOptions      | `string`                                                         |           -           | 入参为主题别名,切换主题                                                                                                                             |
 | setLinkOptions       | `LinkOptions`                                                    |           -           | 更改link配置                                                                                                                                        |
 | setZoomOptions       | `ZoomOptions`                                                    |           -           | 更改zoom配置项                                                                                                                                      |
+| setDragOptions       | `DragOptions`｜GraphVis实例                                      |    设置拖拽配置项     |
+| setZoomOptions       | `ZoomOptions`                                                    |     GraphVis实例      | 设置缩放配置项                                                                                                                                      |
 | getLink              | -                                                                |       link实例        | 获取link实例                                                                                                                                        |
 | getApp               | -                                                                |   Application 实例    | 获取Application实例                                                                                                                                 |
 | getGraphology        | -                                                                |       Graph实例       | 获取Graph实例,用于操作数据                                                                                                                          |

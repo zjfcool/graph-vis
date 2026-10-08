@@ -322,14 +322,8 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     this.edgeMap = new Map();
     // handle data graph
     this.graphology = new Graphology({ multi, allowSelfLoops, type });
-    console.time("precess");
-    console.time("precess node");
     preprocessNodes(this.graphology, data!.nodes, node!);
-    console.timeEnd("precess node");
-    console.time("precess edge");
     preprocessEdges(this.graphology, data!.edges, edge!);
-    console.timeEnd("precess edge");
-    console.timeEnd("precess");
     this.app = new Application();
     // add viewport
     this.viewportContainer = new Container();
@@ -437,18 +431,12 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     this.app.ticker.add(() => {
       this.tweenGroup.update();
     });
-
     // this.zoomToFit(0.9);
     this.initEvents();
-
     // create
-    console.time("create");
     this.create();
-    console.timeEnd("create");
     this.graphLayout();
-    console.time("draw");
     this.draw();
-    console.timeEnd("draw");
     if (this.layoutContext) {
       this.app.ticker.add(this.graphLayoutTicker());
     }
@@ -1040,10 +1028,12 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
   setZoomOptions(options: ZoomOptions) {
     deepAssign(this.options.zoom, options);
     this.initZoom();
+    return this;
   }
   setDragOptions(options: DragOptions) {
     deepAssign(this.options.drag, options);
     this.initDrag();
+    return this;
   }
   private initDrag() {
     const dragStartHandle = (event: any) => {
@@ -1260,9 +1250,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     if (this.link === undefined) {
       this.link = new Link(this.options.link!);
     }
-    if (isInterationLayout(this.layoutContext)) {
-      this.layoutContext.stop();
-    }
+    this.stopLayout();
     this.link.isLinking = true;
     this.link.isDirected = isDirected;
     this.link.source = node;

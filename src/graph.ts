@@ -1263,13 +1263,14 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     this.emit("link:start", this.link);
   }
   endLinkNode() {
+    let edgeId: undefined | string;
     if (this.link) {
       // 如果没有正在link返回
       if (!this.link.isLinking) return;
       if (this.link.targetType === "node") {
         const source = this.link.source?.id;
         const target = (this.link.target as BaseNode)?.id;
-        return this.addEdge({ source, target, isDirected: this.link.isDirected });
+        edgeId = this.addEdge({ source, target, isDirected: this.link.isDirected });
       }
       this.link.isLinking = false;
       this.link.data.isLinking = false;
@@ -1280,6 +1281,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
       this.link.cacheEdges = [];
       this.emit("link:end", this.link);
     }
+    return edgeId;
   }
 }
 export { GraphVis };

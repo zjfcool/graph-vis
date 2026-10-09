@@ -1,0 +1,1 @@
+function e(e=100,t=1e3,n=1e3){let r=[],i=[];for(let i=0;i<e;i++){let e={label:`a${i}`,id:`${i}`,x:(Math.random()-.5)*t,y:(Math.random()-.5)*n,group:i%10};r.push(e)}for(let t=0;t<e;t++){let n=`${Math.floor(Math.sqrt(t%e))}`,r=`${t%e}`,a={source:n,target:r,label:`${n}->${r}`};i.push(a)}return{nodes:r,edges:i}}export{e as t};

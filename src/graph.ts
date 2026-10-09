@@ -704,7 +704,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     const node = this.createNode(nodeId) as BaseNode;
     node.draw();
     this.emit("node:afteradd", node);
-    return this;
+    return nodeId;
   }
   // 获取单个节点
   getNode(id: string) {
@@ -848,7 +848,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     const edge = this.createEdge(edgeId);
     edge.draw(true);
     this.emit("edge:afteradd", edge);
-    return this;
+    return edgeId;
   }
   // 删除边
   dropEdge(id: string) {
@@ -1269,7 +1269,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
       if (this.link.targetType === "node") {
         const source = this.link.source?.id;
         const target = (this.link.target as BaseNode)?.id;
-        this.addEdge({ source, target, isDirected: this.link.isDirected });
+        return this.addEdge({ source, target, isDirected: this.link.isDirected });
       }
       this.link.isLinking = false;
       this.link.data.isLinking = false;

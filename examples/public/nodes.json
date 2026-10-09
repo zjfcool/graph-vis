@@ -1,0 +1,24 @@
+{
+  "nodes": [
+    { "id": "7", "type": "circle", "x": -10, "y": 200, "size": 12 },
+    { "id": "0", "type": "text", "x": -100, "y": 0, "size": 18 },
+    { "id": "1", "type": "rect", "x": 100, "y": 300, "size": [24, 34] },
+    { "id": "2", "type": "ellipse", "x": -300, "y": 0, "size": [18, 9] },
+    { "id": "3", "type": "image", "x": -200, "y": 30, "size": [24] },
+    { "id": "4", "type": "polygon", "x": -100, "y": 200, "size": [24] },
+    { "id": "5", "type": "star", "x": 100, "y": -100, "size": [12] },
+    { "id": "6", "type": "bitmap-text", "x": 100, "y": -300, "size": 18 }
+  ],
+  "edges": [
+    { "source": "0", "target": "1" },
+    { "source": "1", "target": "2" },
+    { "source": "1", "target": "3" },
+    { "source": "0", "target": "1" },
+    { "source": "1", "target": "0" },
+    { "source": "0", "target": "0" },
+    { "source": "4", "target": "5" },
+    { "source": "6", "target": "7" },
+    { "source": "1", "target": "4" },
+    { "source": "4", "target": "7" }
+  ]
+}

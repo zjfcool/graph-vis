@@ -15,14 +15,7 @@
     ],
     "import/no-cycle": ["error", { "maxDepth": 3 }]
   },
-  "ignorePatterns": [
-    "dist/**",
-    "node_modules/**",
-    ".lefthook/**",
-    "esm/**",
-    "examples/**",
-    "*.json"
-  ],
+  "ignorePatterns": ["dist/**", "node_modules/**", ".lefthook/**", "esm/**", "*.json"],
   "env": {
     "builtin": true
   }

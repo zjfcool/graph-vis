@@ -36,17 +36,17 @@ jobs:
           cd ./examples
           pnpm run build
 
-      - name: Prepare docs folder for GitHub Pages
+      - name: Prepare pages folder for GitHub Pages
         run: |
-          rm -rf docs
-          mkdir -p docs
+          rm -rf pages
+          mkdir -p pages
 
-          cp -r ./examples/dist ./docs/examples
-          touch docs/.nojekyll
+          cp -r ./examples/dist ./pages/examples
+          touch pages/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./pages
           publish_branch: gh-pages

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@zjfcool/graph-vis':
-        specifier: 0.4.0
-        version: 0.4.0(graphology-types@0.24.8)(pixi.js@8.19.0)
+        specifier: 0.4.1
+        version: 0.4.1(graphology-types@0.24.8)(pixi.js@8.19.0)
       dat.gui:
         specifier: ^0.7.9
         version: 0.7.9
@@ -157,8 +157,8 @@ packages:
     resolution: {integrity: sha512-/5NV/vDALVFDXgLmfsy9TRCBlKwO2LNBFzpzvb9iIj+jR+eSc6DLYYvVOdivT/jm7MtU6TebYuRmzEOI7w40UA==}
     engines: {node: '>=10.0.0'}
 
-  '@zjfcool/graph-vis@0.4.0':
-    resolution: {integrity: sha512-Fow5b/IMYfspHO+jv81MaWC8AyJ3KHX+pZ7j0oHvZDBIR9XJz2zcW7jtUfUWER/c4TKVPH72RunSBSUY7P+5RA==}
+  '@zjfcool/graph-vis@0.4.1':
+    resolution: {integrity: sha512-gDhFVyOgqnr7vmQQC8DGvmDNFYWNfEo18Nh9IegFKNgdt9rEwtIGiVaDFq867mo0MZr4cV01p1Qu9ypDxf3DCg==}
     peerDependencies:
       pixi.js: '>=8'
 
@@ -493,7 +493,7 @@ snapshots:
 
   '@xmldom/xmldom@0.8.15': {}
 
-  '@zjfcool/graph-vis@0.4.0(graphology-types@0.24.8)(pixi.js@8.19.0)':
+  '@zjfcool/graph-vis@0.4.1(graphology-types@0.24.8)(pixi.js@8.19.0)':
     dependencies:
       '@tweenjs/tween.js': 25.0.0
       bezier-js: 6.1.4

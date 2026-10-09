@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@zjfcool/graph-vis": "0.4.0",
+    "@zjfcool/graph-vis": "0.4.1",
     "dat.gui": "^0.7.9",
     "pixi.js": "8.19.0"
   },

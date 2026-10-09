@@ -1,2 +1,2 @@
 minimumReleaseAgeExclude:
-  - '@zjfcool/graph-vis@0.4.0'
+  - "@zjfcool/graph-vis@0.4.1"

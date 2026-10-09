@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   appType: "mpa",
-  base: "/examples/",
+  base: "/graph-vis/examples/",
   server: {
     fs: {
       allow: [".."],

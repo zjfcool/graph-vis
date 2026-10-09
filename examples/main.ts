@@ -1,7 +1,7 @@
 import { GraphVis } from "@zjfcool/graph-vis";
 const container = document.querySelector("#app") as HTMLDivElement;
 async function init() {
-  const res = await fetch("/examples/block.json");
+  const res = await fetch("/graph-vis/examples/block.json");
   const data = await res.json();
   const graph = new GraphVis({
     container,

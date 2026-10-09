@@ -28,7 +28,7 @@ register("node", "custom", CustomNode);
 
 async function init() {
   const container = document.querySelector("#app")!;
-  const res = await fetch("/examples/nodes.json");
+  const res = await fetch("/graph-vis/examples/nodes.json");
   const data = await res.json();
   const graph = new GraphVis({
     container: container as HTMLElement,

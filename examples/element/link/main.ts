@@ -3,7 +3,7 @@ import { FillGradient, FillPattern, Assets } from "pixi.js";
 import { GUI } from "dat.gui";
 async function init() {
   const container = document.querySelector("#app")!;
-  const res = await fetch("/examples/edges.json");
+  const res = await fetch("/graph-vis/examples/edges.json");
   const data = await res.json();
   const graph = new GraphVis({
     container: container as HTMLElement,
@@ -145,7 +145,7 @@ async function init() {
         },
       });
     });
-  const texture = await Assets.load("/examples/green.png"); //https://pixijs.com/assets/bunny.png
+  const texture = await Assets.load("/graph-vis/examples/green.png"); //https://pixijs.com/assets/bunny.png
   const pattern = new FillPattern({ texture: texture, repetition: "no-repeat" });
   const gradient = new FillGradient({
     type: "linear",

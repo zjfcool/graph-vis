@@ -14,7 +14,7 @@ async function init() {
     node: {
       type: "image",
       style: {
-        imgUrl: "/examples/favicon.png",
+        imgUrl: "/graph-vis/examples/favicon.png",
       },
       labelConfig: {
         labelText: (d: any) => d.id,

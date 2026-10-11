@@ -761,6 +761,7 @@ class GraphVis extends TypedEmitter<GraphVisEvents> {
     }
     if (node) this.setNodeOptions(node);
     if (edge) this.setEdgeOptions(edge);
+    return this;
   }
   // 判断是否要试图更改节点大小,形状，位置等layout
   private isNodeLayoutChanged(nodeOptions: NodeOptions) {

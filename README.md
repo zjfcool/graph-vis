@@ -1,10 +1,20 @@
 # GraphVis
 
-一个图可视化库, 支持上万节点、边的渲染,渲染层基于[PixiJS](https://github.com/pixijs/pixijs)。
+一个基于 [PixiJS](https://github.com/pixijs/pixijs) 的图可视化库，支持上万节点与边的渲染
 
 <p align="center">
      <a href="https://zjfcool.github.io/graph-vis/examples/"><img width="80%" src="https://zjfcool.github.io/graph-vis/examples/preview.png"></a>
 </p>
+
+## 特性
+
+- **高性能**：基于 PixiJS 渲染，轻松支持上万节点与边。
+- **数据驱动**：属性支持函数动态生成，样式随数据实时变化。
+- **可扩展**：支持自定义节点、边、布局与主题。
+- **交互丰富**：内置缩放、平移、拖拽、连线及完整事件系统。
+- **多种布局**：内置 d3-force 与 random，支持自定义扩展。
+- **多种绘制**：节点与边支持 Graphics 与 Sprite 两种绘制方式。
+- **多种节点**：内置圆形、椭圆、矩形、多边形、星形、图片、文本等。
 
 ## 示例
 

@@ -1,0 +1,45 @@
+name: Deploy docs to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: "11.2.2"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 25
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: |
+          cd ./docs
+          pnpm install --frozen-lockfile
+
+      - name: Build docs
+        run: |
+          cd ./docs
+          pnpm run build
+
+      - name: Add .nojekyll
+        run: touch ./docs/.vitepress/dist/.nojekyll
+
+      - name: Deploy docs to root of gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/.vitepress/dist
+          publish_branch: gh-pages
+          keep_files: true # 保留 examples/ 子目录

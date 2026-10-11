@@ -1,0 +1,36 @@
+---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
+
+hero:
+  name: "GraphVis"
+  text: "A high-performance graph visualization library based on PixiJS"
+  tagline: Smooth rendering for tens of thousands of nodes and edges
+  actions:
+    - theme: brand
+      text: Quick Start
+      link: /en/guide/quick-start
+    - theme: alt
+      text: View Examples
+      link: /en/demos/
+
+features:
+  - icon: ⚡
+    title: Blazing Performance
+    details: Powered by PixiJS rendering, it effortlessly handles smooth interactions with tens of thousands of nodes and edges.
+  - icon: 🎨
+    title: Data-Driven
+    details: Style attributes can be dynamically generated via functions, letting visuals respond to data in real time without manual redraws.
+  - icon: 🧩
+    title: Flexible & Extensible
+    details: Nodes, edges, layouts, and themes are all customizable and extensible to meet a wide range of scenarios.
+  - icon: 🖱️
+    title: Rich Interactions
+    details: Built-in zoom, pan, drag, link creation, and a complete event system — ready to use out of the box.
+  - icon: 📐
+    title: Multiple Layouts
+    details: Includes d3-force and random layouts, with support for custom layouts and dynamic switching on demand.
+  - icon: 🔷
+    title: Diverse Node Types
+    details: Built-in node types including circle, rectangle, polygon, star, image, and text.
+---

@@ -12,16 +12,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+      - uses: pnpm/action-setup@v6
         with:
           version: "11.2.2"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 25
           cache: "pnpm"
@@ -36,17 +33,11 @@ jobs:
           cd ./examples
           pnpm run build
 
-      - name: Prepare pages folder for GitHub Pages
-        run: |
-          rm -rf pages
-          mkdir -p pages
-
-          cp -r ./examples/dist ./pages/examples
-          touch pages/.nojekyll
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy examples to /examples subpath
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./pages
+          publish_dir: ./examples/dist
+          destination_dir: examples # 推到 gh-pages 的 examples/ 下
           publish_branch: gh-pages
+          keep_files: true # 保留 docs 的文件

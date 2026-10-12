@@ -5,13 +5,13 @@
 A high-performance graph visualization library based on [PixiJS](https://github.com/pixijs/pixijs), supporting smooth rendering of tens of thousands of nodes and edges.
 
 <p align="center">
-  <img width="83%" src="assets/preview.gif" alt="Project Preview">
+  <img width="83%" src="https://zjfcool.github.io/graph-vis/preview/preview.gif" alt="Project Preview">
 </p>
 
 <p align="center">
-  <img width="40%" src="assets/element.png" alt="Element Illustration">
+  <img width="40%" src="https://zjfcool.github.io/graph-vis/preview/element.png" alt="Element Illustration">
   &nbsp;&nbsp;
-  <img width="40%" src="assets/20000.png" alt="20,000 Data Visualization">
+  <img width="40%" src="https://zjfcool.github.io/graph-vis/preview/20000.png" alt="20,000 Data Visualization">
 </p>
 
 <p align="center">

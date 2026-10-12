@@ -13,7 +13,8 @@
   "files": [
     "dist",
     "esm",
-    "src"
+    "src",
+    "README*"
   ],
   "type": "module",
   "main": "esm/index.js",

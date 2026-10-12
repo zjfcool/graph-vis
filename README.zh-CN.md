@@ -5,13 +5,13 @@
 基于 [PixiJS](https://github.com/pixijs/pixijs) 的高性能图可视化库，支持上万节点与边的流畅渲染。
 
 <p align="center">
-  <img width="83%" src="assets/preview.gif" alt="项目预览">
+  <img width="83%" src="https://zjfcool.github.io/graph-vis/preview/preview.gif" alt="项目预览">
 </p>
 
 <p align="center">
-  <img width="40%" src="assets/element.png" alt="元素示意图">
+  <img width="40%" src="https://zjfcool.github.io/graph-vis/preview/element.png" alt="元素示意图">
   &nbsp;&nbsp;
-  <img width="40%" src="assets/20000.png" alt="20000 数据图">
+  <img width="40%" src="https://zjfcool.github.io/graph-vis/preview/20000.png" alt="20000 数据图">
 </p>
 
 <p align="center">

@@ -23,8 +23,9 @@ GraphVis 在 unpkg 与 jsDelivr 上均可获取，二者任选其一即可。
   const { GraphVis } = Graph;
 
   async function init() {
+    const container = document.querySelector("#container");
     const graph = new GraphVis({
-      container: "#container",
+      container: container,
       data, // 默认: { edges: [], nodes: [] }
       width: container.clientWidth,
       height: container.clientHeight,

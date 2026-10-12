@@ -38,8 +38,9 @@ bun add pixi.js @zjfcool/graph-vis
 import { GraphVis } from "@zjfcool/graph-vis";
 
 async function init() {
+  const container = document.querySelector("#container")
   const graph = new GraphVis({
-    container: "#container",
+    container: container,
     data, // 默认: { edges: [], nodes: [] }
     width: container.clientWidth,
     height: container.clientHeight,

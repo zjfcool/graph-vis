@@ -9,12 +9,12 @@
     
     <link rel="preload stylesheet" href="/graph-vis/assets/style.CF7d-lsD.css" as="style">
     <link rel="preload stylesheet" href="/graph-vis/assets/vp-icons.139f4833.css" as="style">
-    <script type="module" src="/graph-vis/assets/chunks/metadata.f2190f94.js"></script>
-    <script type="module" src="/graph-vis/assets/app.BBehb0KY.js"></script>
+    <script type="module" src="/graph-vis/assets/chunks/metadata.82eeaaaf.js"></script>
+    <script type="module" src="/graph-vis/assets/app.BX0s-HnL.js"></script>
     <link rel="preload" href="/graph-vis/assets/inter-roman-latin.q5rAVC0E.woff2" as="font" type="font/woff2" crossorigin="">
     <link rel="modulepreload" href="/graph-vis/assets/chunks/framework.DD2lXFOM.js">
-    <link rel="modulepreload" href="/graph-vis/assets/chunks/theme.Cd_C20E7.js">
-    <link rel="modulepreload" href="/graph-vis/assets/guide_installation_index.md.CYYMwwwJ.lean.js">
+    <link rel="modulepreload" href="/graph-vis/assets/chunks/theme.DQ07JZTN.js">
+    <link rel="modulepreload" href="/graph-vis/assets/guide_installation_index.md.opKfv-dt.lean.js">
     <script id="check-dark-mode">(()=>{let e=localStorage.getItem(`vitepress-theme-appearance`)||`auto`,t=window.matchMedia(`(prefers-color-scheme: dark)`).matches;(!e||e===`auto`?t:e===`dark`)&&document.documentElement.classList.add(`dark`)})();</script>
     <script id="check-mac-os">document.documentElement.classList.toggle(`mac`,/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
   </head>
@@ -24,8 +24,9 @@
 <span class="line"><span style="--shiki-light:#c62739;--shiki-dark:#F97583;">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> { GraphVis } </span><span style="--shiki-light:#c62739;--shiki-dark:#F97583;">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &quot;@zjfcool/graph-vis&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">;</span></span>
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#c62739;--shiki-dark:#F97583;">async</span><span style="--shiki-light:#c62739;--shiki-dark:#F97583;"> function</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> init</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">() {</span></span>
+<span class="line"><span style="--shiki-light:#c62739;--shiki-dark:#F97583;">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> container</span><span style="--shiki-light:#c62739;--shiki-dark:#F97583;"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> document.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">querySelector</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;#container&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">)</span></span>
 <span class="line"><span style="--shiki-light:#c62739;--shiki-dark:#F97583;">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;"> graph</span><span style="--shiki-light:#c62739;--shiki-dark:#F97583;"> =</span><span style="--shiki-light:#c62739;--shiki-dark:#F97583;"> new</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> GraphVis</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">({</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    container: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;#container&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    container: container,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    data, </span><span style="--shiki-light:#62687b;--shiki-dark:#818e99;">// 默认: { edges: [], nodes: [] }</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    width: container.clientWidth,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    height: container.clientHeight,</span></span>
